@@ -11,15 +11,26 @@ public class CorsConfig {
 
     @Bean
     public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
 
-        config.addAllowedOrigin("http://localhost:4200");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        CorsConfiguration config =
+                new CorsConfiguration();
+
         config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://localhost:4200");
+
+        config.addAllowedOrigin("http://localhost:30086");
+
+        config.addAllowedOriginPattern("*");
+
+        config.addAllowedHeader("*");
+
+        config.addAllowedMethod("*");
 
         source.registerCorsConfiguration("/**", config);
+
         return new CorsFilter(source);
     }
 }
