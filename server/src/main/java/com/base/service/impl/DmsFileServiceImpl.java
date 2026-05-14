@@ -24,7 +24,7 @@ public class DmsFileServiceImpl implements DmsFileService {
         try {
 
 
-            String uploadDir = "uploads/";
+            String uploadDir = "server/uploads/";
 
             File dir = new File(uploadDir);
 
