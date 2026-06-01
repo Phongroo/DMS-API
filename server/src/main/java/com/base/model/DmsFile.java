@@ -15,7 +15,7 @@ public class DmsFile {
 
     private String fileName;
 
-    private String filePath;
+    private String objectKey;   // thay filePath
 
     private String contentType;
 
@@ -44,12 +44,12 @@ public class DmsFile {
         this.fileName = fileName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getObjectKey() {
+        return objectKey;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setObjectKey(String objectKey) {
+        this.objectKey = objectKey;
     }
 
     public String getContentType() {

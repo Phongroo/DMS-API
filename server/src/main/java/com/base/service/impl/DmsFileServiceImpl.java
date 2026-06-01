@@ -19,53 +19,25 @@ import java.util.Date;
 public class DmsFileServiceImpl implements DmsFileService {
     @Autowired
     private DmsFileRepository repository;
+
+    @Autowired
+    private MinioService minioService;
+
     @Override
     public BaseResponse save(DmsFileReq req, MultipartFile file) {
         try {
 
+            // 1. Upload file lên MinIO
+            String objectKey = minioService.upload(file);
 
-            String uploadDir = "server/uploads/";
-
-            File dir = new File(uploadDir);
-
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
-            String fileName =
-                    System.currentTimeMillis()
-                    + "_"
-                    + file.getOriginalFilename();
-
-            String filePath =
-                    uploadDir + fileName;
-
-            Files.copy(
-                    file.getInputStream(),
-                    Paths.get(filePath),
-                    StandardCopyOption.REPLACE_EXISTING
-            );
-
+            // 2. Lưu metadata DB
             DmsFile dmsFile = new DmsFile();
 
-            dmsFile.setFileName(
-                    file.getOriginalFilename()
-            );
-
-            dmsFile.setFilePath(filePath);
-
-            dmsFile.setContentType(
-                    file.getContentType()
-            );
-
-            dmsFile.setFileSize(
-                    file.getSize()
-            );
-
-            dmsFile.setUploadedDate(
-                    new Date()
-            );
-
+            dmsFile.setFileName(file.getOriginalFilename());
+            dmsFile.setObjectKey(objectKey);
+            dmsFile.setContentType(file.getContentType());
+            dmsFile.setFileSize(file.getSize());
+            dmsFile.setUploadedDate(new Date());
             dmsFile.setDoc(req.getDmsDoc());
 
             repository.save(dmsFile);
@@ -73,11 +45,10 @@ public class DmsFileServiceImpl implements DmsFileService {
             return new BaseResponse(
                     200,
                     dmsFile,
-                    "Upload success"
+                    "Upload success (MinIO)"
             );
 
         } catch (Exception e) {
-
             return new BaseResponse(
                     500,
                     null,
