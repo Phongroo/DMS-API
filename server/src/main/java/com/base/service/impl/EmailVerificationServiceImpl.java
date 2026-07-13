@@ -20,6 +20,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
+import java.util.Base64;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @Service
 public class EmailVerificationServiceImpl implements EmailVerificationService {
@@ -41,6 +51,12 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 
     @Value("${app.callback-base-url}")
     private String callbackBaseUrl;
+
+    @Value("${resend.api.key:}")
+    private String resendApiKey;
+
+    @Value("${resend.from-email:onboarding@resend.dev}")
+    private String resendFromEmail;
 
     private String loadEmailTemplate() {
         try (InputStream is = getClass().getResourceAsStream("/templates/email-verification.html")) {
@@ -107,7 +123,41 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
         }
 
         // Send email
-        if (mailSender != null) {
+        if (resendApiKey != null && !resendApiKey.trim().isEmpty() && !resendApiKey.startsWith("${")) {
+            try {
+                String encodedEmail = URLEncoder.encode(email, "UTF-8");
+                String callbackAgreeUrl = callbackBaseUrl + "/api/verify/callback?email=" + encodedEmail + "&code=" + code + "&decision=AGREE";
+                String callbackRejectUrl = callbackBaseUrl + "/api/verify/callback?email=" + encodedEmail + "&code=" + code + "&decision=REJECT";
+
+                String htmlTemplate = loadEmailTemplate();
+                String htmlContent = null;
+                String textContent = null;
+                if (htmlTemplate != null) {
+                    htmlContent = htmlTemplate
+                            .replace("[[contractName]]", displayContractName)
+                            .replace("[[amount]]", displayAmount)
+                            .replace("[[description]]", displayDesc)
+                            .replace("[[callbackAgreeUrl]]", callbackAgreeUrl)
+                            .replace("[[callbackRejectUrl]]", callbackRejectUrl);
+                } else {
+                    textContent = "Xin chào,\n\nBạn có yêu cầu xác nhận tài liệu:\n" 
+                            + "- Tên tài liệu: " + displayContractName + "\n"
+                            + "- Số tiền: " + displayAmount + "\n"
+                            + "- Mô tả: " + displayDesc + "\n\n"
+                            + "Vui lòng click vào một trong các link sau để xác nhận:\n"
+                            + "- ĐỒNG Ý: " + callbackAgreeUrl + "\n"
+                            + "- TỪ CHối: " + callbackRejectUrl + "\n\n"
+                            + "Trân trọng.";
+                }
+
+                String finalName = (attachmentFileName != null && !attachmentFileName.trim().isEmpty()) ? attachmentFileName : "document.pdf";
+                String finalType = (attachmentContentType != null && !attachmentContentType.trim().isEmpty()) ? attachmentContentType : "application/pdf";
+
+                sendEmailWithResend(email, "Xác nhận thông tin tài liệu - Hệ thống DMS", htmlContent, textContent, fileBytes, finalName, finalType);
+            } catch (Exception e) {
+                log.error("Failed to send verification email via Resend to {}: {}. Code printed to console: {}", email, e.getMessage(), code);
+            }
+        } else if (mailSender != null) {
             try {
                 String encodedEmail = URLEncoder.encode(email, "UTF-8");
                 String callbackAgreeUrl = callbackBaseUrl + "/api/verify/callback?email=" + encodedEmail + "&code=" + code + "&decision=AGREE";
@@ -164,7 +214,55 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
                 log.error("Failed to send verification email to {}: {}. Code printed to console: {}", email, e.getMessage(), code);
             }
         } else {
-            log.warn("JavaMailSender bean not configured. Printed code to console: {}", code);
+            log.warn("Neither Resend nor JavaMailSender is configured. Printed code to console: {}", code);
+        }
+    }
+
+    private void sendEmailWithResend(String to, String subject, String htmlContent, String textContent, byte[] attachmentBytes, String attachmentName, String attachmentType) {
+        try {
+            Map<String, Object> payload = new HashMap<>();
+            payload.put("from", resendFromEmail);
+            payload.put("to", Collections.singletonList(to));
+            payload.put("subject", subject);
+            if (htmlContent != null) {
+                payload.put("html", htmlContent);
+            }
+            if (textContent != null) {
+                payload.put("text", textContent);
+            }
+
+            if (attachmentBytes != null) {
+                Map<String, Object> attachment = new HashMap<>();
+                String base64Content = Base64.getEncoder().encodeToString(attachmentBytes);
+                attachment.put("content", base64Content);
+                attachment.put("filename", attachmentName);
+                attachment.put("content_type", attachmentType);
+                payload.put("attachments", Collections.singletonList(attachment));
+            }
+
+            String json = new ObjectMapper().writeValueAsString(payload);
+
+            OkHttpClient client = new OkHttpClient();
+            RequestBody body = RequestBody.create(
+                    json,
+                    MediaType.parse("application/json; charset=utf-8")
+            );
+            Request request = new Request.Builder()
+                    .url("https://api.resend.com/emails")
+                    .post(body)
+                    .addHeader("Authorization", "Bearer " + resendApiKey)
+                    .addHeader("Content-Type", "application/json")
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                if (response.isSuccessful()) {
+                    log.info("Email sent successfully via Resend to {}", to);
+                } else {
+                    log.error("Failed to send email via Resend: Code {}, Body {}", response.code(), response.body() != null ? response.body().string() : "null");
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error sending email via Resend: {}", e.getMessage(), e);
         }
     }
 
