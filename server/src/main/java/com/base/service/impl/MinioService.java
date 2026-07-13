@@ -2,6 +2,9 @@ package com.base.service.impl;
 
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import io.minio.BucketExistsArgs;
+import io.minio.MakeBucketArgs;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,19 @@ public class MinioService {
 
     @Value("${minio.bucket-name}")
     private String bucket;
+
+    @PostConstruct
+    public void init() {
+        try {
+            boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucket).build());
+            if (!found) {
+                minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucket).build());
+                System.out.println("Bucket '" + bucket + "' created successfully.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error initializing MinIO bucket: " + e.getMessage());
+        }
+    }
 
     public String upload(MultipartFile file) throws Exception {
 
