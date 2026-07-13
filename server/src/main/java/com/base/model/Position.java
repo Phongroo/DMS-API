@@ -1,5 +1,6 @@
 package com.base.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,14 +12,15 @@ public class Position {
     private long positionId;
     private String positionName;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "position",orphanRemoval = true)
-    private Set<UserRole> userRoles=new HashSet<>();
+    private Set<User> users=new HashSet<>();
     public Position(){}
 
-    public Position(long positionId, String positionName, Set<UserRole> userRoles) {
+    public Position(long positionId, String positionName, Set<User> users) {
         this.positionId = positionId;
         this.positionName = positionName;
-        this.userRoles = userRoles;
+        this.users = users;
     }
 
     public long getPositionId() {
@@ -37,11 +39,11 @@ public class Position {
         this.positionName = positionName;
     }
 
-    public Set<UserRole> getUserRoles() {
-        return userRoles;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUserRoles(Set<UserRole> userRoles) {
-        this.userRoles = userRoles;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

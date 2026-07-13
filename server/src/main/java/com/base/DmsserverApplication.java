@@ -4,6 +4,8 @@ import com.base.model.Role;
 import com.base.model.User;
 import com.base.model.UserRole;
 import com.base.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +17,9 @@ import java.util.Set;
 
 @SpringBootApplication
 public class DmsserverApplication implements CommandLineRunner {
+
+	private static final Logger log = LoggerFactory.getLogger(DmsserverApplication.class);
+
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -26,16 +31,13 @@ public class DmsserverApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Starting code");
-		System.out.println("Starting code2");
-		User existingUser = this.userService.getUser("yenna");
-		System.out.println("Starting code1");
+		log.info("Starting DmsServer application...");
+		User existingUser = this.userService.getUser("hongphong");
 		if (existingUser == null) {
-
 			User user = new User();
-			user.setFirstName("Yen");
-			user.setLastName("Na");
-			user.setUsername("yenna");
+			user.setFirstName("Hong");
+			user.setLastName("Phong");
+			user.setUsername("hongphong");
 			user.setPassword(this.bCryptPasswordEncoder.encode("123456"));
 			user.setEmail("hongphong.12012001@gmail.com");
 			user.setProfile("avatar.png");
@@ -53,10 +55,9 @@ public class DmsserverApplication implements CommandLineRunner {
 			userRoleSet.add(userRole);
 
 			this.userService.createUser(user, userRoleSet);
-
-			System.out.println("User created");
+			log.info("Default admin user 'yenna' created successfully.");
 		} else {
-			System.out.println("User already exists");
+			log.info("Default admin user 'yenna' already exists.");
 		}
 	}
 }

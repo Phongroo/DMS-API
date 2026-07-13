@@ -53,7 +53,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()   // 👈 BẬT CORS
                 .and()
                 .authorizeRequests()
-                .antMatchers("/generate-token", "/user/", "/file/view/**").permitAll()
+                .antMatchers("/generate-token", "/user/", "/file/view/**", "/api/verify/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and()

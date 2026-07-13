@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c09e2125-8e46-436b-9ace-5fac4be57121" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.edit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/base/controller/ChatBoxAIController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/base/model/Res/MessageRes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/base/service/GeminiClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/server/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/DmsserverApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/DmsserverApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/Enum/StatusEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/Enum/StatusEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/config/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/config/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/config/MySecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/config/MySecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/controller/DmsDocController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/controller/DmsDocController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/controller/StartProcessControler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/controller/StartProcessControler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/model/Authority.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/model/Authority.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/model/DmsDoc.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/model/DmsDoc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/model/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/model/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/model/ProcessActionConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/model/ProcessActionConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/model/Req/ProcessTaskReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/model/Req/ProcessTaskReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/model/Res/TaskResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/model/Res/TaskResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/model/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/model/UserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/model/UserRole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/repo/DmsDocRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/repo/DmsDocRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/repo/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/repo/RoleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/repo/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/repo/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/service/CamundaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/service/CamundaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/service/DmsDocService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/service/DmsDocService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/service/DmsFileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/service/DmsFileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/service/impl/CamundaServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/service/impl/CamundaServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/service/impl/DmsDocServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/service/impl/DmsDocServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/service/impl/DmsFileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/service/impl/DmsFileServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/base/service/impl/MinioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/base/service/impl/MinioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/com/base/DmsserverApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/com/base/DmsserverApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Phongroo&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Phongroo/DMS-API.git&quot;,
+    &quot;accountId&quot;: &quot;12f97d26-c98c-44b7-ae32-518a7500b5c1&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="3EWZL7qVQMuN9I0MyHxWWTU3R9F" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.dmsserver [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.dmsserver [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.dmsserver [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.DmsserverApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Phong_jr/project/BackEnd/server&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.54252875&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;PLAIN_TEXT&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Phong_jr\project\BackEnd\server" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="DmsserverApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="dmsserver" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.base.DmsserverApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c09e2125-8e46-436b-9ace-5fac4be57121" name="Changes" comment="" />
+      <created>1780296227502</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1780296227502</updated>
+      <workItem from="1780296228654" duration="9447000" />
+      <workItem from="1781668357519" duration="9455000" />
+      <workItem from="1782094237586" duration="71507000" />
+      <workItem from="1782976477200" duration="969000" />
+      <workItem from="1783050936791" duration="8430000" />
+      <workItem from="1783307654637" duration="56348000" />
+      <workItem from="1783669273718" duration="221000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/base/service/impl/DmsFileServiceImpl.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/base/service/impl/MinioService.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/base/controller/DmsDocController.java</url>
+          <line>107</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/base/service/impl/GeminiClientServiceImpl.java</url>
+          <line>95</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/base/controller/DmsDocController.java</url>
+          <line>163</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/base/service/impl/GeminiClientServiceImpl.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/base/service/impl/DmsDocServiceImpl.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/base/service/impl/DmsDocServiceImpl.java</url>
+          <line>151</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/base/service/impl/DmsDocServiceImpl.java</url>
+          <line>74</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/com/base/service/impl/DmsDocServiceImpl.java</url>
+          <line>130</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

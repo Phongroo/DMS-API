@@ -2,13 +2,12 @@ package com.base.controller;
 
 import com.base.model.DmsFile;
 import com.base.repo.DmsFileRepository;
+import com.base.service.DmsDocService;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/file")
@@ -31,6 +24,8 @@ public class FileController {
     private DmsFileRepository dmsFileRepository;
     @Autowired
     private MinioClient minioClient;
+    @Autowired
+    private DmsDocService dmsDocService;
 
     @Value("${minio.bucket-name}")
     private String bucket;
@@ -41,6 +36,11 @@ public class FileController {
     ) throws Exception {
         DmsFile file = dmsFileRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("File not found"));
+
+        // Check fine-grained access control on document level
+        if (file.getDoc() != null && !dmsDocService.hasAccess(file.getDoc())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
 
         InputStream stream = minioClient.getObject(
                 GetObjectArgs.builder()

@@ -59,6 +59,66 @@ public class ProcessActionConfig {
                                     "2",
                                     "DIRECTOR"
                             )
+                    ),
+
+                    "PENDING_DIRECTOR_APPROVAL",
+                    List.of(
+                            new ActionButton(
+                                    "Director duyệt",
+                                    "approve",
+                                    "success",
+                                    "1",
+                                    "2",
+                                    "DIRECTOR"
+                            ),
+                            new ActionButton(
+                                    "Director từ chối",
+                                    "reject",
+                                    "danger",
+                                    "0",
+                                    "2",
+                                    "DIRECTOR"
+                            )
+                    ),
+
+                    "MANAGER_REJECTED",
+                    List.of(
+                            new ActionButton(
+                                    "Gửi duyệt lại",
+                                    "resubmit",
+                                    "primary",
+                                    "1",
+                                    "0",
+                                    "STAFF"
+                            ),
+                            new ActionButton(
+                                    "Hủy hồ sơ",
+                                    "cancel",
+                                    "danger",
+                                    "0",
+                                    "0",
+                                    "STAFF"
+                            )
+                    ),
+
+                    "DIRECTOR_REJECTED",
+                    List.of(
+                            new ActionButton(
+                                    "Gửi duyệt lại",
+                                    "resubmit",
+                                    "primary",
+                                    "1",
+                                    "0",
+                                    "STAFF"
+                            ),
+                            new ActionButton(
+                                    "Hủy hồ sơ",
+                                    "cancel",
+                                    "danger",
+                                    "0",
+                                    "0",
+                                    "STAFF"
+                            )
                     )
             );
     public static List<ActionButton> getButtons(

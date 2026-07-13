@@ -23,5 +23,8 @@ public enum StatusEnum {
     DIRECTOR_REJECTED,
 
     // Hoàn thành quy trình
-    COMPLETED;
+    COMPLETED,
+
+    // Hủy hồ sơ
+    CANCELLED;
 }

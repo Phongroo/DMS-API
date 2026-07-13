@@ -16,8 +16,6 @@ public class UserRole {
     private User user;
     @ManyToOne
     private Role role;
-    @ManyToOne
-    private Position position;
 
     public long getUserRoleId() {
         return userRoleId;
@@ -43,11 +41,4 @@ public class UserRole {
         this.role = role;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
 }

@@ -37,4 +37,13 @@ public class MinioService {
 
         return objectKey;
     }
+
+    public java.io.InputStream download(String objectKey) throws Exception {
+        return minioClient.getObject(
+                io.minio.GetObjectArgs.builder()
+                        .bucket(bucket)
+                        .object(objectKey)
+                        .build()
+        );
+    }
 }

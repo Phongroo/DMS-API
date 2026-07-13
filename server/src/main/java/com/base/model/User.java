@@ -28,6 +28,45 @@ public class User implements UserDetails {
     private String phone;
     private boolean enable=true;
     private String profile;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "position_id")
+    private Position position;
+
+    @com.fasterxml.jackson.annotation.JsonProperty("branchId")
+    public void setBranchId(Long branchId) {
+        if (branchId != null) {
+            this.branch = new Branch();
+            this.branch.setId(branchId);
+        } else {
+            this.branch = null;
+        }
+    }
+    
+    @com.fasterxml.jackson.annotation.JsonProperty("branchId")
+    public Long getBranchId() {
+        return (this.branch != null) ? this.branch.getId() : null;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "user",orphanRemoval = true)
     @JsonIgnore
     private Set<UserRole>userRoles=new HashSet<>();
@@ -102,8 +141,10 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Authority> set=new HashSet<>();
+        String positionName = this.position != null ? this.position.getPositionName() : null;
+        Long bId = getBranchId();
         this.userRoles.forEach(userRole -> {
-            set.add(new Authority(userRole.getRole().getRoleName(), userRole.getPosition().getPositionName()));
+            set.add(new Authority(userRole.getRole().getRoleName(), positionName, bId));
         });
         return set;
     }

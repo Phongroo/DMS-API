@@ -24,11 +24,66 @@ public class DmsDoc {
     private String processInstanceId;
     private String status;
     private String createdBy;
+    private String docType;
+    private String creatorName;
     private Date createdDate;
+    private String securityLevel = "Nội bộ";
+    @Column(name = "allowed_role")
+    private String allowedRole;
+    private String allowedPositions;
+    private Long branchId;
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public String getAllowedRole() {
+        return allowedRole;
+    }
+
+    public void setAllowedRole(String allowedRole) {
+        this.allowedRole = allowedRole;
+    }
+
+    public String getAllowedPositions() {
+        return allowedPositions;
+    }
+
+    public void setAllowedPositions(String allowedPositions) {
+        this.allowedPositions = allowedPositions;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public String getSecurityLevel() {
+        return securityLevel;
+    }
+
+    public void setSecurityLevel(String securityLevel) {
+        this.securityLevel = securityLevel;
+    }
+
+    public String getDocType() {
+        return docType;
+    }
+
+    public void setDocType(String docType) {
+        this.docType = docType;
+    }
 
     @OneToMany(
             mappedBy = "doc",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
     @JsonManagedReference
@@ -88,5 +143,25 @@ public class DmsDoc {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    private Double amount;
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -1,5 +1,6 @@
 package com.base.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +12,7 @@ public class Role {
     private long roleId;
     private String roleName;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "role",orphanRemoval = true)
     private Set<UserRole> userRoles=new HashSet<>();
 

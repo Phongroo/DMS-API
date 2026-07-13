@@ -14,7 +14,62 @@ public class TaskResponse {
     private String processInstanceId;
     private String status;
     private String createdBy;
+    private String creatorName;
     private Date createdDate;
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+    private String securityLevel;
+    private String allowedRole;
+    private String allowedPositions;
+    private Long branchId;
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public String getAllowedRole() {
+        return allowedRole;
+    }
+
+    public void setAllowedRole(String allowedRole) {
+        this.allowedRole = allowedRole;
+    }
+
+    public String getAllowedPositions() {
+        return allowedPositions;
+    }
+
+    public void setAllowedPositions(String allowedPositions) {
+        this.allowedPositions = allowedPositions;
+    }
+
+    private String docType;
+
+    public String getSecurityLevel() {
+        return securityLevel;
+    }
+
+    public void setSecurityLevel(String securityLevel) {
+        this.securityLevel = securityLevel;
+    }
+
+    public String getDocType() {
+        return docType;
+    }
+
+    public void setDocType(String docType) {
+        this.docType = docType;
+    }
     private List<ActionButton> actionButtons;
     private List<DmsFile> dmsFiles;
     public TaskResponse(){};

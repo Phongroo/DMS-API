@@ -1,0 +1,9 @@
+.git
+.idea
+*.iml
+.mvn
+mvnw
+mvnw.cmd
+src
+pom.xml
+# Do NOT ignore target/ because we need to COPY the built jar file!

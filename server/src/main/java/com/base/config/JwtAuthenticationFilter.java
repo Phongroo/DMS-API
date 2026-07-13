@@ -2,6 +2,8 @@ package com.base.config;
 
 import com.base.service.impl.UserDetailsServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +21,8 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -33,17 +37,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if(requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")){
             jwtToken = requestTokenHeader.substring(7);
+        } else if (request.getParameter("token") != null) {
+            jwtToken = request.getParameter("token");
+        }
 
+        if (jwtToken != null) {
             try{
                 username = this.jwtUtil.extractUsername(jwtToken);
             }catch (ExpiredJwtException exception){
-                System.out.println("El token ha expirado");
+                log.warn("JWT token has expired.");
             }catch (Exception e){
-                e.printStackTrace();
+                log.error("Error parsing JWT token: {}", e.getMessage(), e);
             }
-
-        }else{
-            System.out.println("Token invalido , no empieza con bearer string");
+        } else {
+            log.trace("No Bearer token found in request headers/parameters.");
         }
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
@@ -54,8 +61,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
-        }else{
-            System.out.println("El token no es valido");
+        } else {
+            log.trace("Token is invalid or user context already authenticated.");
         }
         filterChain.doFilter(request,response);
     }

@@ -6,5 +6,5 @@ import com.base.model.Res.BaseResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface DmsFileService {
-    BaseResponse save(DmsFileReq req, MultipartFile file);
+    void save(DmsFileReq req, MultipartFile file);
 }

@@ -24,7 +24,7 @@ public class DmsFileServiceImpl implements DmsFileService {
     private MinioService minioService;
 
     @Override
-    public BaseResponse save(DmsFileReq req, MultipartFile file) {
+    public void save(DmsFileReq req, MultipartFile file) {
         try {
 
             // 1. Upload file lên MinIO
@@ -41,19 +41,8 @@ public class DmsFileServiceImpl implements DmsFileService {
             dmsFile.setDoc(req.getDmsDoc());
 
             repository.save(dmsFile);
-
-            return new BaseResponse(
-                    200,
-                    dmsFile,
-                    "Upload success (MinIO)"
-            );
-
         } catch (Exception e) {
-            return new BaseResponse(
-                    500,
-                    null,
-                    e.getMessage()
-            );
+         throw new RuntimeException("Lỗi khi lưu file: " + e.getMessage(), e);
         }
     }
 }

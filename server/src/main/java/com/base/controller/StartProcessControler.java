@@ -2,6 +2,7 @@ package com.base.controller;
 
 import com.base.model.Req.ProcessTaskReq;
 import com.base.model.Req.StartJobReq;
+import com.base.model.Req.StartProcessReq;
 import com.base.model.Res.BaseResponse;
 import com.base.service.CamundaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,35 @@ public class StartProcessControler {
     public ResponseEntity<BaseResponse> startProcess(
 
             @RequestPart("file")
-            MultipartFile file
+            MultipartFile file,
+            @RequestParam(value = "docType", required = false)
+            String docType,
+            @RequestParam(value = "email", required = false)
+            String email
 
     ) {
 
         return ResponseEntity.ok(
                 camundaService.startProcess(
-                        file
+                        file,
+                        docType,
+                        email
+                )
+        );
+    }
+
+    @PostMapping(
+            value = "/start",
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<BaseResponse> startProcessFromJson(
+            @RequestBody StartProcessReq req
+    ) {
+        return ResponseEntity.ok(
+                camundaService.startProcessFromTemplate(
+                        req.getDocType(),
+                        req.getTemplateData(),
+                        req.getEmail()
                 )
         );
     }
@@ -46,5 +69,17 @@ public class StartProcessControler {
     public ResponseEntity<?> getViewerUrl(
             @PathVariable String processInstanceId) {
         return ResponseEntity.ok(camundaService.viewTask(processInstanceId));
+    }
+
+    @PostMapping("/deploy-bpmn")
+    public ResponseEntity<BaseResponse> deployBpmn(
+            @RequestBody java.util.Map<String, String> payload
+    ) {
+        String xml = payload.get("xml");
+        String filename = payload.get("filename");
+        if (xml == null || xml.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(new com.base.model.Res.BaseResponse(400, null, "XML content is required"));
+        }
+        return ResponseEntity.ok(camundaService.deployBpmn(xml, filename));
     }
 }

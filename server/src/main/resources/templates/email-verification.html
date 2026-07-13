@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác Thực Hợp Đồng</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f5f7; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f5f7; padding: 40px 0;">
+        <tr>
+            <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <!-- Header Banner -->
+                    <tr>
+                        <td align="center" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); padding: 35px 20px;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: bold; letter-spacing: 0.5px; text-transform: uppercase;">XÁC THỰC THÔNG TIN TÀI LIỆU</h1>
+                        </td>
+                    </tr>
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 40px 30px; color: #333333; line-height: 1.6;">
+                            <p style="margin-top: 0; font-size: 16px;">Xin chào,</p>
+                            <p style="font-size: 15px;">Chúng tôi nhận được yêu cầu xác thực tài liệu từ bạn để bắt đầu quy trình xử lý tài liệu trên hệ thống <strong>DMS</strong>. Vui lòng kiểm tra kỹ các thông tin dưới đây:</p>
+                            
+                            <!-- Document Info Box -->
+                            <table border="0" cellpadding="10" cellspacing="0" width="100%" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; margin: 25px 0; font-size: 14px;">
+                                <tr>
+                                    <td width="30%" style="font-weight: bold; color: #475569; border-bottom: 1px solid #e2e8f0;">Tên tài liệu:</td>
+                                    <td style="color: #0f172a; border-bottom: 1px solid #e2e8f0;">[[contractName]]</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; color: #475569; border-bottom: 1px solid #e2e8f0;">Giá trị:</td>
+                                    <td style="color: #0f172a; font-weight: bold; border-bottom: 1px solid #e2e8f0; color: #4f46e5;">[[amount]]</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; color: #475569; vertical-align: top;">Chi tiết / Mô tả:</td>
+                                    <td style="color: #0f172a; white-space: pre-line;">[[description]]</td>
+                                </tr>
+                            </table>
+
+                            <!-- Decision Section -->
+                            <p style="font-size: 15px; margin-bottom: 25px; text-align: center;"><strong>Hãy đưa ra phản hồi của bạn bằng cách click vào một trong hai lựa chọn dưới đây:</strong></p>
+                            
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="center" style="padding-bottom: 15px;">
+                                        <table border="0" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <!-- Agree Button -->
+                                                <td align="center" style="border-radius: 8px; background-color: #10b981;">
+                                                    <a href="[[callbackAgreeUrl]]" target="_blank" style="padding: 14px 35px; border: 1px solid #10b981; border-radius: 8px; font-family: Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; font-weight: bold; display: inline-block; text-align: center;">
+                                                        ĐỒNG Ý XÁC THỰC
+                                                    </a>
+                                                </td>
+                                                <td width="20">&nbsp;</td>
+                                                <!-- Reject Button -->
+                                                <td align="center" style="border-radius: 8px; background-color: #ef4444;">
+                                                    <a href="[[callbackRejectUrl]]" target="_blank" style="padding: 14px 35px; border: 1px solid #ef4444; border-radius: 8px; font-family: Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; font-weight: bold; display: inline-block; text-align: center;">
+                                                        TỪ CHỐI XÁC THỰC
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <p style="font-size: 13px; color: #94a3b8; margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 15px; text-align: center;">* Email xác nhận này sẽ hết hạn trong vòng 5 phút.</p>
+                        </td>
+                    </tr>
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="background-color: #f9fafb; padding: 20px; border-top: 1px solid #e5e7eb;">
+                            <p style="margin: 0; font-size: 12px; color: #9ca3af;">Đây là email tự động từ hệ thống Quản lý Tài liệu DMS.</p>
+                            <p style="margin: 5px 0 0 0; font-size: 12px; color: #9ca3af;">&copy; 2026 DMS System. All rights reserved.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
