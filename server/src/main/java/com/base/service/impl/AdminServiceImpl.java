@@ -257,13 +257,19 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Position> getAllPositions() {
         List<Position> positions = positionRepository.findAll();
-        if (positions.isEmpty()) {
-            String[] names = {"STAFF", "MANAGER", "DIRECTOR"};
-            long id = 1;
-            for (String name : names) {
-                Position p = new Position(id++, name, new HashSet<>());
+        String[] requiredPositions = {"STAFF", "MANAGER", "DIRECTOR", "SALES_CS", "LEAD_AUDITOR", "AUDITOR", "TECHNICAL_REVIEWER", "CERT_DIRECTOR"};
+        boolean updated = false;
+        long maxId = positions.stream().mapToLong(Position::getPositionId).max().orElse(0L);
+
+        for (String posName : requiredPositions) {
+            boolean exists = positions.stream().anyMatch(p -> posName.equalsIgnoreCase(p.getPositionName()));
+            if (!exists) {
+                Position p = new Position(++maxId, posName, new HashSet<>());
                 positionRepository.save(p);
+                updated = true;
             }
+        }
+        if (updated) {
             positions = positionRepository.findAll();
         }
         return positions;

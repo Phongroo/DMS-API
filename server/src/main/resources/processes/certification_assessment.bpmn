@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_Cert" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0">
+  <bpmn:process id="certification_assessment" name="Quy trình Đánh giá &#38; Cấp Chứng nhận Hợp chuẩn / Hợp quy" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_Cert" name="Tiếp nhận Hồ sơ Đăng ký">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task_DeskReview" name="Giai đoạn 1: Soát xét Tài liệu &#38; Năng lực" camunda:assignee="LEAD_AUDITOR">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_OnSiteAudit" name="Giai đoạn 2: Đánh giá Hiện trường &#38; Lấy mẫu" camunda:assignee="LEAD_AUDITOR">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_LabTesting" name="Thử nghiệm Mẫu tại Phòng Lab (VILAS/17025)" camunda:assignee="AUDITOR">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_NCR" name="Có phát hiện lỗi NCR?" default="Flow_NoNCR">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_HasNCR</bpmn:outgoing>
+      <bpmn:outgoing>Flow_NoNCR</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_CAPA" name="Doanh nghiệp nộp CAPA &#38; Chuyên gia Đóng lỗi" camunda:assignee="LEAD_AUDITOR">
+      <bpmn:incoming>Flow_HasNCR</bpmn:incoming>
+      <bpmn:outgoing>Flow_CAPADone</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_TechnicalReview" name="Thẩm xét Kỹ thuật Độc lập (ISO 17021/17065)" camunda:assignee="TECHNICAL_REVIEWER">
+      <bpmn:incoming>Flow_NoNCR</bpmn:incoming>
+      <bpmn:incoming>Flow_CAPADone</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_ReviewDecision" name="Kết quả Thẩm xét?" default="Flow_ReviewPass">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_ReviewPass</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ReviewFail</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_IssueCert" name="Ký Quyết định &#38; Cấp Giấy Chứng Nhận (GCN)" camunda:assignee="CERT_DIRECTOR">
+      <bpmn:incoming>Flow_ReviewPass</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_Certified" name="Phát hành GCN &#38; Kích hoạt Giám sát Định kỳ">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndEvent_Rejected" name="Từ chối Cấp Chứng nhận">
+      <bpmn:incoming>Flow_ReviewFail</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_Cert" targetRef="Task_DeskReview" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_DeskReview" targetRef="Task_OnSiteAudit" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_OnSiteAudit" targetRef="Task_LabTesting" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_LabTesting" targetRef="Gateway_NCR" />
+    <bpmn:sequenceFlow id="Flow_HasNCR" name="Có lỗi (Major/Minor)" sourceRef="Gateway_NCR" targetRef="Task_CAPA">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${hasNcr == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_NoNCR" name="Không có lỗi" sourceRef="Gateway_NCR" targetRef="Task_TechnicalReview" />
+    <bpmn:sequenceFlow id="Flow_CAPADone" sourceRef="Task_CAPA" targetRef="Task_TechnicalReview" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_TechnicalReview" targetRef="Gateway_ReviewDecision" />
+    <bpmn:sequenceFlow id="Flow_ReviewPass" name="Đạt yêu cầu" sourceRef="Gateway_ReviewDecision" targetRef="Task_IssueCert" />
+    <bpmn:sequenceFlow id="Flow_ReviewFail" name="Không đạt" sourceRef="Gateway_ReviewDecision" targetRef="EndEvent_Rejected">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reviewPassed == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_IssueCert" targetRef="EndEvent_Certified" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Cert">
+    <bpmndi:BPMNPlane id="BPMNPlane_Cert" bpmnElement="certification_assessment">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_Cert" bpmnElement="StartEvent_Cert">
+        <dc:Bounds x="177" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="155" y="215" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_DeskReview_di" bpmnElement="Task_DeskReview">
+        <dc:Bounds x="275" y="150" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_OnSiteAudit_di" bpmnElement="Task_OnSiteAudit">
+        <dc:Bounds x="455" y="150" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_LabTesting_di" bpmnElement="Task_LabTesting">
+        <dc:Bounds x="645" y="150" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_NCR_di" bpmnElement="Gateway_NCR" isMarkerVisible="true">
+        <dc:Bounds x="835" y="165" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="894.5" y="176" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ReviewDecision_di" bpmnElement="Gateway_ReviewDecision" isMarkerVisible="true">
+        <dc:Bounds x="1135" y="165" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1125" y="127.5" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_IssueCert_di" bpmnElement="Task_IssueCert">
+        <dc:Bounds x="1245" y="150" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Certified_di" bpmnElement="EndEvent_Certified">
+        <dc:Bounds x="1435" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1409" y="208" width="89" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Rejected_di" bpmnElement="EndEvent_Rejected">
+        <dc:Bounds x="1295" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1282" y="318" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_CAPA_di" bpmnElement="Task_CAPA">
+        <dc:Bounds x="970" y="40" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_TechnicalReview_di" bpmnElement="Task_TechnicalReview">
+        <dc:Bounds x="915" y="440" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="213" y="190" />
+        <di:waypoint x="275" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="395" y="190" />
+        <di:waypoint x="455" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="585" y="190" />
+        <di:waypoint x="645" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="775" y="190" />
+        <di:waypoint x="835" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_HasNCR_di" bpmnElement="Flow_HasNCR">
+        <di:waypoint x="860" y="165" />
+        <di:waypoint x="860" y="80" />
+        <di:waypoint x="970" y="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="114" width="66" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_NoNCR_di" bpmnElement="Flow_NoNCR">
+        <di:waypoint x="860" y="215" />
+        <di:waypoint x="860" y="480" />
+        <di:waypoint x="915" y="480" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="455" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CAPADone_di" bpmnElement="Flow_CAPADone">
+        <di:waypoint x="1035" y="120" />
+        <di:waypoint x="1035" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="1045" y="480" />
+        <di:waypoint x="1160" y="480" />
+        <di:waypoint x="1160" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ReviewPass_di" bpmnElement="Flow_ReviewPass">
+        <di:waypoint x="1185" y="190" />
+        <di:waypoint x="1245" y="190" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1186" y="165" width="58" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ReviewFail_di" bpmnElement="Flow_ReviewFail">
+        <di:waypoint x="1160" y="215" />
+        <di:waypoint x="1160" y="300" />
+        <di:waypoint x="1295" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1149" y="248" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="1375" y="190" />
+        <di:waypoint x="1435" y="190" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

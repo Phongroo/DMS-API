@@ -285,7 +285,7 @@ public class DmsDocServiceImpl implements DmsDocService {
 
             String requestUrl = ocrUrl;
             if (requestUrl == null || requestUrl.trim().isEmpty()) {
-                requestUrl = "http://host.docker.internal:30088";
+                requestUrl = "http://localhost:8088";
             }
             if (!requestUrl.contains("/api/ocr/upload")) {
                 if (requestUrl.endsWith("/")) {

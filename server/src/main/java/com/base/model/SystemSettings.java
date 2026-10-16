@@ -8,7 +8,7 @@ public class SystemSettings {
     @Id
     private Long id = 1L; // We only need a single row for global system settings
 
-    private String camundaUrl = "http://host.docker.internal:30081";
+    private String camundaUrl = "http://localhost:8081";
     private String socketHost = "http://localhost:3000";
     private Integer apiTimeout = 5000; // in milliseconds
 
